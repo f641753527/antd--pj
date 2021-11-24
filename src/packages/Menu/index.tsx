@@ -1,19 +1,35 @@
-import { FC } from "react";
+import { FC, useState, createContext } from "react";
 import useClassNames from "../../hooks/useClassNames";
 // import MenuItem from "./MenuItem";
-import { MenuProps } from "./types";
+import { MenuProps, IMenuContext } from "./types";
 
 export * from './types';
 export { default as MenuItem } from './MenuItem';
 
+export const MenuContext = createContext<IMenuContext>({activeIndex: 0})
+
 const Menu: FC<MenuProps> = (props) => {
-  const { mode, className, style, children } = props
+  const { mode, className, style, children, defauleIndex, onSelect } = props
+
+  const [activeIndex, changeActive] = useState(defauleIndex ?? 0)
+
+  const handleSelect = (index: number) => {
+    changeActive(index)
+    onSelect && onSelect(index)
+  }
+
+  const ctx: IMenuContext = {
+    activeIndex,
+    onSelect: handleSelect,
+  }
 
   const classNames = useClassNames({ compDesc: 'menu', nativeClasses: className, mode })
 
   return (
-    <ul className={classNames} style={style}>
-      { children }
+    <ul data-testid={'testid'} className={classNames} style={style}>
+      <MenuContext.Provider value={ctx}>
+        { children }
+      </MenuContext.Provider>
     </ul>
   )
 }

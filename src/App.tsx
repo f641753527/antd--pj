@@ -5,9 +5,10 @@ function App() {
 
   return (
     <div className="App">
-      <Menu>
+      <Menu defauleIndex={2} mode={'horizontal'}>
         <MenuItem index={1}>Link</MenuItem>
         <MenuItem className={'menu-item-test2'} index={2} disabled>Link2</MenuItem>
+        <MenuItem index={3}>Link3</MenuItem>
       </Menu>
     </div>
   );

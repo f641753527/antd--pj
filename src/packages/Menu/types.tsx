@@ -1,20 +1,25 @@
-import { CSSProperties, ReactElement } from 'react'
+import { CSSProperties } from 'react'
 
 export type MenuMode = 'vertical' | 'horizontal'
+
+type onSelect = (index: number) => void
 
 export interface MenuProps {
   mode?: MenuMode
   className?: string
   style?: CSSProperties
   defauleIndex?: number
-  children: ReactElement<MenuItemProps>[]
-  onSelect?: (index: number) => void
+  onSelect?: onSelect
 }
 
 export interface MenuItemProps {
-  index?: number
+  index: number
   className?: string
   style?: CSSProperties
-  children: ReactElement | string
   disabled?: boolean
+}
+
+export interface IMenuContext {
+  activeIndex: number
+  onSelect?: onSelect
 }
