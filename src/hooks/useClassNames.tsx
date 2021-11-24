@@ -1,23 +1,27 @@
+import { MenuMode } from '../packages/Menu';
+
 interface classNamesProps {
   compDesc: string
   nativeClasses?: string
   size?: string
   type?: string
   disabled?: boolean
+  mode?: MenuMode
 }
 
 const useClassNames = (config: classNamesProps) => {
-  const { compDesc, nativeClasses, size, type, disabled } = config
+  const { compDesc, nativeClasses, size, type, disabled, mode } = config
   let classNames = [compDesc]
   if (nativeClasses) {
     classNames = classNames.concat(nativeClasses.split(' '))
   }
   if (disabled) {
-    classNames.push(`${compDesc}-disabled`)
+    classNames.push(`is-disabled`)
   }
 
   size && classNames.push(`${compDesc}-${size}`)
   type && classNames.push(`${compDesc}-${type}`)
+  mode && classNames.push(`${compDesc}-${mode}`)
 
   return classNames.join(' ')
 }

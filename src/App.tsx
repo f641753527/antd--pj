@@ -1,14 +1,14 @@
 import React from 'react';
-import Alert, { AlertType } from './packages/Alert'
+import Menu, { MenuItem } from './packages/Menu';
 
 function App() {
 
   return (
     <div className="App">
-      <Alert type={AlertType.Danger} header={'123'} showClose={false} />
-      <Alert type={AlertType.Warn} header={'456'}/>
-      <Alert type={AlertType.Success} header={'456'} content={'这是更详细的描述'} />
-      <Alert header={'456'}/>
+      <Menu>
+        <MenuItem index={1}>Link</MenuItem>
+        <MenuItem className={'menu-item-test2'} index={2} disabled>Link2</MenuItem>
+      </Menu>
     </div>
   );
 }
