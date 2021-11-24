@@ -9,6 +9,7 @@ function App() {
         <MenuItem index={1}>Link</MenuItem>
         <MenuItem className={'menu-item-test2'} index={2} disabled>Link2</MenuItem>
         <MenuItem index={3}>Link3</MenuItem>
+        <li>123</li>
       </Menu>
     </div>
   );
