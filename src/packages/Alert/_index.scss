@@ -1,0 +1,25 @@
+.alert{
+  position: relative;
+  padding: $btn-padding-x-sm $btn-padding-x-sm;
+  @include button-style($white, $gray-300, $black);
+  line-height: $line-height-base;
+  box-shadow: $box-shadow;
+}
+.alert--close{
+  position: absolute;
+  right: $btn-padding-x-sm;
+  top: $btn-padding-y-sm;
+  font-size: $font-size-sm;
+  cursor: pointer;
+}
+
+.alert-success{
+  @include button-style($success, $primary, $white);
+}
+.alert-danger{
+  @include button-style($danger, $white, $white);
+}
+
+.alert-warn{
+  @include button-style($warning, $yellow, $white);
+}
