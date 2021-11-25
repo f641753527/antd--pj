@@ -1,0 +1,17 @@
+.tabs{
+  .tabs--header{
+    display: flex;
+    border-bottom: $btn-border-width solid $border-color;
+    .tab-item{
+      padding: $btn-padding-y-sm $btn-padding-x-sm;
+      cursor: pointer;
+      &.is-active{
+        border-bottom: $menu-item-active-border-width solid $primary;
+      }
+      &.is-disabled{
+        cursor: not-allowed;
+        color: $btn-link-disabled-color;
+      }
+    }
+  }
+}

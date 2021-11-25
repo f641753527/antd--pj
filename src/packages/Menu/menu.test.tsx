@@ -34,7 +34,7 @@ function renderMenuByProps(props: MenuProps): ReactElement {
       <MenuItem index={2} disabled>Link2</MenuItem>
       <MenuItem index={3}>Link3</MenuItem>
       <SubMenu title="Link4">
-        <MenuItem>Link4-1</MenuItem>
+        <MenuItem index={4}>Link4-1</MenuItem>
       </SubMenu>
     </Menu>
   )
@@ -73,7 +73,7 @@ describe('test Menu and MenuItem Component corrent rendered', () => {
     const SubItem = Wrapper.queryByText('Link4-1')
 
     expect(SubItem).not.toBeVisible()
-    const SubMenu = menuElement.querySelector('.submenu-item')
+    const SubMenu = menuElement.querySelector('.submenu-item') as HTMLElement
     fireEvent.mouseEnter(SubMenu)
     await waitFor(() => {
       expect(SubItem).toBeVisible()
