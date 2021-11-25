@@ -19,7 +19,13 @@ export interface MenuItemProps {
   disabled?: boolean
 }
 
+export interface SubMenuProps {
+  className?: string
+  title: string
+}
+
 export interface IMenuContext {
+  mode?: MenuMode
   activeIndex: number
   onSelect?: onSelect
 }

@@ -49,12 +49,15 @@
       transform: rotate(180deg) !important;
     }
   }
-  .viking-submenu {
-    //display: none;
+  .submenu {
+    display: none;
     list-style:none;
     padding-left: 0;
     white-space: nowrap;
-    //transition: $menu-transition;
+    transition: $menu-transition;
+    &.is-open{
+      display: block;
+    }
     .menu-item {
       padding: $menu-item-padding-y $menu-item-padding-x;
       cursor: pointer;
@@ -65,15 +68,12 @@
       }
     }
   }
-  .viking-submenu.menu-opened {
-    //display: block;
-  }
 }
 .menu-horizontal {
   >.menu-item {
     border-bottom: $menu-item-active-border-width solid transparent;
   }
-  .viking-submenu {
+  .submenu {
     position: absolute;
     background: $white;
     z-index: 100;

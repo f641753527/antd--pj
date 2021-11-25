@@ -1,11 +1,12 @@
-import { FC, useState, createContext, Children, FunctionComponentElement } from "react";
+import { FC, useState, createContext } from "react";
 import useClassNames from "../../hooks/useClassNames";
 // import MenuItem from "./MenuItem";
 import { MenuProps, IMenuContext, MenuItemProps } from "./types";
+import useRenderChildren from './useRenderChildren'
 
 export * from './types';
 export { default as MenuItem } from './MenuItem';
-
+export { default as SubMenu } from './SubMenu';
 export const MenuContext = createContext<IMenuContext>({activeIndex: 0})
 
 const Menu: FC<MenuProps> = (props) => {
@@ -19,27 +20,19 @@ const Menu: FC<MenuProps> = (props) => {
   }
 
   const ctx: IMenuContext = {
+    mode,
     activeIndex,
     onSelect: handleSelect,
   }
 
   const classNames = useClassNames({ compDesc: 'menu', nativeClasses: className, mode })
 
-  function renderChildren() {
-    return Children.map(children, (item) => {
-      const MenuItemElement = item as FunctionComponentElement<MenuItemProps>
-      if (MenuItemElement.type.displayName === 'MenuItem') {
-        return item
-      } else {
-        console.warn('Menu 组件只能包含MenuItem 子组件')
-      }
-    })
-  }
+  const childNodes = useRenderChildren<MenuItemProps>(children, ['MenuItem', 'SubMenu'])
 
   return (
     <ul data-testid={'testid'} className={classNames} style={style}>
       <MenuContext.Provider value={ctx}>
-        { renderChildren() }
+        { childNodes }
       </MenuContext.Provider>
     </ul>
   )

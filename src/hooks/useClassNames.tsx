@@ -8,10 +8,11 @@ interface classNamesProps {
   disabled?: boolean
   mode?: MenuMode
   active?: boolean
+  opened?: boolean
 }
 
 const useClassNames = (config: classNamesProps) => {
-  const { compDesc, nativeClasses, size, type, disabled, mode, active } = config
+  const { compDesc, nativeClasses, size, type, disabled, mode, active, opened } = config
   let classNames = [compDesc]
   if (nativeClasses) {
     classNames = classNames.concat(nativeClasses.split(' '))
@@ -21,6 +22,9 @@ const useClassNames = (config: classNamesProps) => {
   }
   if (active) {
     classNames.push('is-active')
+  }
+  if (opened) {
+    classNames.push('is-open')
   }
 
   size && classNames.push(`${compDesc}-${size}`)
