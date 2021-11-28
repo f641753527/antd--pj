@@ -12,11 +12,11 @@ library.add(fas)
 
 const Icon: FC<IIconProps> = (props) => {
 
-  const { icon, theme, className, ...restProps } = props
+  const { theme, className, ...restProps } = props
 
   const classNames = useClassNames({ compDesc: 'icon', nativeClasses: className, theme })
 
-  return <FontAwesomeIcon icon ={icon} className={classNames} {...restProps} />
+  return <FontAwesomeIcon className={classNames} {...restProps} />
 
 }
 

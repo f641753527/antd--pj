@@ -5,4 +5,5 @@ export type IconTheme = 'primary' | 'secondary' | 'success' | 'info' | 'warning'
 
 export  interface IIconProps extends FontAwesomeIconProps {
   theme?: IconTheme
+  className?: string
 }
