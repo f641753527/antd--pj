@@ -1,6 +1,7 @@
 import React from 'react';
 // import Menu, { MenuItem, SubMenu } from './packages/Menu';
 import Tabs, { TabItem } from './packages/Tabs/Tabs'
+import Icon from './packages/Icon'
 
 function App() {
 
@@ -10,6 +11,8 @@ function App() {
 
   return (
     <div className="App">
+      <Icon icon={'coffee'} size={'3x'} theme={'danger'} />
+
       <Tabs defaultIndex={4} onChange={(i) => handleChange(i)}>
         <TabItem tab={'tabitem1'} index={2}>1</TabItem>
         <TabItem tab={'tabitem2'} disabled index={3}>2</TabItem>
