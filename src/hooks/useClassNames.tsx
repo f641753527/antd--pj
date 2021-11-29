@@ -11,10 +11,12 @@ interface classNamesProps {
   active?: boolean
   opened?: boolean
   theme?: IconTheme
+  prefix?: boolean
+  suffix?: boolean
 }
 
 const useClassNames = (config: classNamesProps) => {
-  const { compDesc, nativeClasses, size, type, disabled, mode, active, opened, theme } = config
+  const { compDesc, nativeClasses, size, type, disabled, mode, active, opened, theme, prefix, suffix } = config
   let classNames = [compDesc]
   if (nativeClasses) {
     classNames = classNames.concat(nativeClasses.split(' '))
@@ -27,6 +29,15 @@ const useClassNames = (config: classNamesProps) => {
   }
   if (opened) {
     classNames.push('is-open')
+  }
+  if (prefix) {
+    classNames.push(`${compDesc}-group-prefix`)
+  }
+  if (suffix) {
+    classNames.push(`${compDesc}-group-suffix`)
+  }
+  if (prefix || suffix) {
+    classNames.push(`${compDesc}-group`)
   }
 
   size && classNames.push(`${compDesc}-${size}`)

@@ -1,13 +1,33 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Menu, { MenuItem, SubMenu } from './packages/Menu';
 // import Tabs, { TabItem } from './packages/Tabs/Tabs'
 import Icon from './packages/Icon'
 import Alert from './packages/Alert';
+import Input, { InputSize, AutoComplete } from './packages/Input';
+import Button from './packages/Button';
+
+const Cavs = ['LeBron james', 'Jr Smith', 'Kevin Love', 'Irving', 'Richard Jefferson', 'Kyle Korver', 'Iman Shumpert', 'Tristan Thompson', 'Channing Frye']
 
 function App() {
 
-  const handleChange = (i: number): boolean => {
-    return true
+  // const handleChange = (i: number): boolean => {
+  //   return true
+  // }
+
+  const fetchSuggestion = (keyword: string) => {
+    return Cavs.filter(item => {
+      return item.includes(keyword)
+    })
+  }
+
+  const [value, setValue] = useState('3')
+
+  const handleChange: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
+    setValue(e.target.value)
+  }
+
+  const handleSelect = (item: string) => {
+    setValue(item)
   }
 
   return (
@@ -34,6 +54,11 @@ function App() {
       <hr />
 
       <Alert icon='times' title='title' content='content' />
+
+      <hr />
+      <Input size={InputSize.Large} suffix='123' prefix='456' value={value} onChange={handleChange} />
+      <Button onClick={() => setValue('777')}>Submit</Button>
+      <AutoComplete value={value} onChange={handleChange} onSelect={handleSelect}  fetchSuggestion={fetchSuggestion} />
     </div>
   );
 }
