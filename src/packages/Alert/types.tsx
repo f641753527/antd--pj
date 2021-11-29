@@ -1,4 +1,5 @@
 import {  HTMLAttributes } from "react";
+import { IconName } from '@fortawesome/fontawesome-common-types'
 
 export enum AlertType {
   Default = 'default',
@@ -14,4 +15,5 @@ export interface AlertProps extends HTMLAttributes<HTMLElement> {
   onClose?: () => void
   header?: React.ReactElement | string
   content?: React.ReactElement | string
+  icon?: IconName
 }

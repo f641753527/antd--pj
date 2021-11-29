@@ -2,6 +2,7 @@ import React from 'react';
 import Menu, { MenuItem, SubMenu } from './packages/Menu';
 // import Tabs, { TabItem } from './packages/Tabs/Tabs'
 import Icon from './packages/Icon'
+import Alert from './packages/Alert';
 
 function App() {
 
@@ -29,6 +30,10 @@ function App() {
           </SubMenu>
         </MenuItem>
       </Menu>
+
+      <hr />
+
+      <Alert icon='times' title='title' content='content' />
     </div>
   );
 }
