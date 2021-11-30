@@ -1,6 +1,7 @@
-import { ChangeEvent, FC, KeyboardEvent, useEffect, useState } from "react";
+import { ChangeEvent, FC, KeyboardEvent, useEffect, useRef, useState } from "react";
 import Input from ".";
 import useClassNames from "../../hooks/useClassNames";
+import useClickOutside from "../../hooks/useClickOutside";
 import useDebounce from "../../hooks/useDebounce";
 import Icon from "../Icon";
 import { AutoCompleteProps, SelectItemType } from "./types";
@@ -15,14 +16,24 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   const [activeItemIndex, setActive] = useState(0)
 
+  const shouldTriggerSearch = useRef(true)
+
+  const refComp = useRef<HTMLDivElement>(null)
+
+  useClickOutside(refComp, () => {
+    changeList([])
+  })
+
   const handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
     onChange && onChange(e)
+    shouldTriggerSearch.current = true
   }
 
   const searchValue = useDebounce(props.value as string, 1500)
 
   useEffect(() => {
     setActive(0)
+    if (!shouldTriggerSearch.current) return
     const result = fetchSuggestion(searchValue)
     if (result instanceof Promise) {
       setLoading(true)
@@ -37,6 +48,8 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   const handleSelect = (item: SelectItemType) => {
     onSelect && onSelect(item)
+    shouldTriggerSearch.current = false
+    changeList([])
   }
 
   const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -78,7 +91,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
   }
 
   return (
-    <div className='auto-complete'>
+    <div ref={refComp} className='auto-complete'>
       <Input onKeyUp={handleKeyUp} onChange={handleInputChange}  {...restProps} />
       {
         list.length > 0 && renderList()

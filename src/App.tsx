@@ -60,8 +60,7 @@ function App() {
     // const GItem = item as SelectItemType<Player>
     return (
       <>
-        <h6>Name: {item.value}</h6>
-        <p>Number: {item.repos_url}</p>
+        <p>name: {item.value}</p>
       </>
     )
   }
