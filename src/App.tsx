@@ -3,21 +3,47 @@ import Menu, { MenuItem, SubMenu } from './packages/Menu';
 // import Tabs, { TabItem } from './packages/Tabs/Tabs'
 import Icon from './packages/Icon'
 import Alert from './packages/Alert';
-import Input, { InputSize, AutoComplete } from './packages/Input';
+import Input, { InputSize, AutoComplete, SelectItemType } from './packages/Input';
 import Button from './packages/Button';
 
-const Cavs = ['LeBron james', 'Jr Smith', 'Kevin Love', 'Irving', 'Richard Jefferson', 'Kyle Korver', 'Iman Shumpert', 'Tristan Thompson', 'Channing Frye']
+interface Player {
+  value: string
+  number?: number
+  age?: number
+}
 
+interface GithubUser {
+  value: string
+  repos_url?: string
+}
+
+const Cavs: SelectItemType<Player>[] = [
+  { number: 6, value: 'LeBron james', age: 37 },
+  { number: 5, value: 'Jr Smith', age: 33 },
+  { number: 0, value: 'Kevin Love', age: 31 },
+  { number: 2, value: 'Irving', age: 27 },
+  { number: 33, value: 'Richard Jefferson', age: 38 },
+  { number: 26, value: 'Kyle Korver', age: 40 },
+  { number: 4, value: 'Iman Shumpert', age: 33 },
+  { number: 13, value: 'Tristan Thompson', age: 30 },
+  { number: 8, value: 'Channing Frye', age: 40 },
+]
 function App() {
 
   // const handleChange = (i: number): boolean => {
   //   return true
   // }
 
-  const fetchSuggestion = (keyword: string) => {
-    return Cavs.filter(item => {
-      return item.includes(keyword)
-    })
+  // const fetchSuggestion: (ky: string) => SelectItemType<Player>[] = (keyword) => {
+  //   return Cavs.filter(item => {
+  //     return item.value.includes(keyword)
+  //   })
+  // }
+  const fetchSuggestion: (keyword: string) => Promise<SelectItemType<GithubUser>[]> = (keyword) => {
+    return fetch(`https://api.github.com/search/users?q=${keyword}`).then(res => res.json()).then(res => {
+      console.log(res.items)
+      return res.items.map((v: any) => ({ value: v.login, ...v }))
+    }).catch(() => ([]))
   }
 
   const [value, setValue] = useState('3')
@@ -26,8 +52,18 @@ function App() {
     setValue(e.target.value)
   }
 
-  const handleSelect = (item: string) => {
-    setValue(item)
+  const handleSelect: (item: SelectItemType) => void = (item) => {
+    setValue(item.value)
+  }
+
+  const renderItem = (item: SelectItemType<GithubUser>) => {
+    // const GItem = item as SelectItemType<Player>
+    return (
+      <>
+        <h6>Name: {item.value}</h6>
+        <p>Number: {item.repos_url}</p>
+      </>
+    )
   }
 
   return (
@@ -58,7 +94,13 @@ function App() {
       <hr />
       <Input size={InputSize.Large} suffix='123' prefix='456' value={value} onChange={handleChange} />
       <Button onClick={() => setValue('777')}>Submit</Button>
-      <AutoComplete value={value} onChange={handleChange} onSelect={handleSelect}  fetchSuggestion={fetchSuggestion} />
+      <AutoComplete
+        value={value}
+        onChange={handleChange}
+        onSelect={handleSelect}
+        fetchSuggestion={fetchSuggestion}
+        renderItem={renderItem}
+      />
     </div>
   );
 }

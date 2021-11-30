@@ -1,34 +1,52 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import Input from ".";
-import { AutoCompleteProps } from "./types";
+import useDebounce from "../../hooks/useDebounce";
+import Icon from "../Icon";
+import { AutoCompleteProps, SelectItemType } from "./types";
 
 const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
-  const { value, defaultValue, onChange, fetchSuggestion, onSelect, ...restProps } = props
+  const { onChange, fetchSuggestion, onSelect, renderItem, ...restProps } = props
 
-  const [inputValue, setValue] = useState(value)
-  const [list, changeList] = useState<string[]>([])
+  const [list, changeList] = useState<SelectItemType[]>([])
+
+  const [isLoading, setLoading] = useState(false)
 
   const handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
-    console.log(e)
-    const value = e.target.value
-    setValue(value)
-    const list = fetchSuggestion(value)
-    changeList(list)
     onChange && onChange(e)
   }
 
-  const handleSelect = (e: string) => {
-    setValue(e)
-    onSelect && onSelect(e)
+  const searchValue = useDebounce(props.value as string, 1500)
+
+  useEffect(() => {
+    const result = fetchSuggestion(searchValue)
+    if (result instanceof Promise) {
+      setLoading(true)
+      result.then(list => {
+        changeList(list)
+        setLoading(false)
+      })
+    } else {
+      changeList(result)
+    }
+  }, [searchValue])
+
+  const handleSelect = (item: SelectItemType) => {
+    onSelect && onSelect(item)
+  }
+
+  function handleRenderItem(item: SelectItemType) {
+    return renderItem ? renderItem(item) : item.value
   }
 
   function renderList() {
     return (
       <ul>
         {
+          isLoading ? 
+          <Icon icon='spinner' spin /> :
           list.map(item => (
-            <li key={item} onClick={() => handleSelect(item)}>{item}</li>
+            <li key={item.value} onClick={() => handleSelect(item)}>{handleRenderItem(item)}</li>
           ))
         }
       </ul>
@@ -37,7 +55,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   return (
     <div>
-      <Input value={inputValue} onChange={handleInputChange}  {...restProps} />
+      <Input onChange={handleInputChange}  {...restProps} />
       {
         list.length > 0 && renderList()
       }

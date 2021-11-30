@@ -1,5 +1,5 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { InputHTMLAttributes, ReactNode, ChangeEvent } from "react";
+import { InputHTMLAttributes, ReactNode, ChangeEvent, ReactElement } from "react";
 
 export enum InputSize {
   Large = 'lg',
@@ -18,6 +18,13 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLElement>, Ignor
 }
 
 export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
-  fetchSuggestion: (keyword: string) => string[]
-  onSelect?: (item: string) => void
+  fetchSuggestion: (keyword: string) => SelectItemType[] | Promise<SelectItemType[]>
+  onSelect?: (item: SelectItemType) => void
+  renderItem?: (item: SelectItemType) => ReactElement
 }
+
+export interface SelectItemProps {
+  value: string
+}
+
+export type SelectItemType<T = {}> = T & SelectItemProps
