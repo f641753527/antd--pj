@@ -1,5 +1,6 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { ChangeEvent, FC, KeyboardEvent, useEffect, useState } from "react";
 import Input from ".";
+import useClassNames from "../../hooks/useClassNames";
 import useDebounce from "../../hooks/useDebounce";
 import Icon from "../Icon";
 import { AutoCompleteProps, SelectItemType } from "./types";
@@ -12,6 +13,8 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   const [isLoading, setLoading] = useState(false)
 
+  const [activeItemIndex, setActive] = useState(0)
+
   const handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
     onChange && onChange(e)
   }
@@ -19,6 +22,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
   const searchValue = useDebounce(props.value as string, 1500)
 
   useEffect(() => {
+    setActive(0)
     const result = fetchSuggestion(searchValue)
     if (result instanceof Promise) {
       setLoading(true)
@@ -35,18 +39,38 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
     onSelect && onSelect(item)
   }
 
+  const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+    const code = e.keyCode
+    switch(code) {
+      case 13:
+        handleSelect(list[activeItemIndex])
+        break;
+      case 27:
+        changeList([])
+        break;
+      case 38:
+        setActive((activeItemIndex - 1 + list.length) % list.length)
+        break;
+      case 40:
+        setActive((activeItemIndex + 1) % list.length)
+        break;
+      default:
+        break;
+    }
+  }
+
   function handleRenderItem(item: SelectItemType) {
     return renderItem ? renderItem(item) : item.value
   }
 
-  function renderList() {
+  const renderList = () => {
     return (
-      <ul>
+      <ul className='suggestion-list'>
         {
           isLoading ? 
           <Icon icon='spinner' spin /> :
-          list.map(item => (
-            <li key={item.value} onClick={() => handleSelect(item)}>{handleRenderItem(item)}</li>
+          list.map((item, i) => (
+            <li className={`suggestion-item ${i === activeItemIndex?'is-active':''}`} key={item.value} onClick={() => handleSelect(item)}>{handleRenderItem(item)}</li>
           ))
         }
       </ul>
@@ -54,8 +78,8 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
   }
 
   return (
-    <div>
-      <Input onChange={handleInputChange}  {...restProps} />
+    <div className='auto-complete'>
+      <Input onKeyUp={handleKeyUp} onChange={handleInputChange}  {...restProps} />
       {
         list.length > 0 && renderList()
       }
