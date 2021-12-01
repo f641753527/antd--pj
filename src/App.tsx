@@ -5,6 +5,7 @@ import Icon from './packages/Icon'
 import Alert from './packages/Alert';
 import Input, { InputSize, AutoComplete, SelectItemType } from './packages/Input';
 import Button from './packages/Button';
+import Select, { Option } from './packages/Select'
 
 interface Player {
   value: string
@@ -64,6 +65,26 @@ function App() {
       </>
     )
   }
+  const handleSubmit = () => {
+    setValue('999')
+    setSelectValue('888')
+  }
+
+  const [selectValue, setSelectValue] = useState('')
+
+  const renderSelectOption = (item: any) => {
+    return (
+      <>
+        <h5>{item.label}</h5>
+        <p>{item.value}</p>
+      </>
+    )
+  }
+
+  const handleOnSelect = (item: string) => {
+    setSelectValue(item)
+  }
+  console.log(selectValue)
 
   return (
     <div className="App">
@@ -92,14 +113,22 @@ function App() {
 
       <hr />
       <Input size={InputSize.Large} suffix='123' prefix='456' value={value} onChange={handleChange} />
-      <Button onClick={() => setValue('777')}>Submit</Button>
-      <AutoComplete
+      <Button onClick={() => handleSubmit()}>Submit</Button>
+      {/* <AutoComplete
         value={value}
         onChange={handleChange}
         onSelect={handleSelect}
         fetchSuggestion={fetchSuggestion}
         renderItem={renderItem}
-      />
+      /> */}-
+
+      <hr />
+
+      <Select value={selectValue}  size={ InputSize.Large } onSelect={handleOnSelect}>
+        <Option label='数学' value='Math'></Option>
+        <Option label='语文' value='China'></Option>
+        <Option label='英语' value='English'></Option>
+      </Select>
     </div>
   );
 }
