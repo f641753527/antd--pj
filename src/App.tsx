@@ -7,6 +7,8 @@ import Input, { InputSize, AutoComplete, SelectItemType } from './packages/Input
 import Button from './packages/Button';
 import Select, { Option } from './packages/Select'
 
+import Upload, { onSuccessType } from './packages/Upload'
+
 interface Player {
   value: string
   number?: number
@@ -86,6 +88,17 @@ function App() {
   }
   console.log(selectValue)
 
+  const handleUploadSuccess: onSuccessType = (res, file) => {
+    console.log(res, file)
+  }
+  const handleUploadError: onSuccessType = (e, file) => {
+    console.log(e, file)
+  }
+  const handleUploadProgress = (percent: number, file: File) => {
+    console.log(percent, file)
+  }
+
+
   return (
     <div className="App">
       <Icon icon={'chevron-up'} size={'3x'} theme={'warning'} />
@@ -129,6 +142,14 @@ function App() {
         <Option label='语文' value='China'></Option>
         <Option label='英语' value='English'></Option>
       </Select>
+
+      <hr />
+      <Upload
+        action='https://www.fastmock.site/mock/4c1d18ac30a711f83aef9f9eebb952e2/antd/api/file/upload'
+        onSuccess={handleUploadSuccess}
+        onError={handleUploadError}
+        onProgress={handleUploadProgress}
+      />
     </div>
   );
 }
