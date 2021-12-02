@@ -7,7 +7,7 @@ import Input, { InputSize, AutoComplete, SelectItemType } from './packages/Input
 import Button from './packages/Button';
 import Select, { Option } from './packages/Select'
 
-import Upload, { onSuccessType } from './packages/Upload'
+import Upload, { onSuccessType, UploadFile } from './packages/Upload'
 
 interface Player {
   value: string
@@ -88,6 +88,13 @@ function App() {
   }
   console.log(selectValue)
 
+  const [fileList, setFileList] = useState<UploadFile[]>([
+    { uid: '1', name: 'test', size: 1200, status: 'ready', percent: 0 },
+    { uid: '2', name: 'test2', size: 1200, status: 'uploading', percent: 0 },
+    { uid: '3', name: 'test3', size: 1200, status: 'success', percent: 0 },
+    { uid: '4', name: 'test4', size: 1200, status: 'error', percent: 0 },
+  ])
+
   const handleUploadSuccess: onSuccessType = (res, file) => {
     console.log(res, file)
   }
@@ -96,6 +103,9 @@ function App() {
   }
   const handleUploadProgress = (percent: number, file: File) => {
     console.log(percent, file)
+  }
+  const handleBeforeUpload = (file: File) => {
+    return Promise.resolve()
   }
 
 
@@ -146,9 +156,7 @@ function App() {
       <hr />
       <Upload
         action='https://www.fastmock.site/mock/4c1d18ac30a711f83aef9f9eebb952e2/antd/api/file/upload'
-        onSuccess={handleUploadSuccess}
-        onError={handleUploadError}
-        onProgress={handleUploadProgress}
+        fileList={fileList}
       />
     </div>
   );
