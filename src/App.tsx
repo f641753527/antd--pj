@@ -90,7 +90,7 @@ function App() {
 
   const [fileList, setFileList] = useState<UploadFile[]>([
     { uid: '1', name: 'test', size: 1200, status: 'ready', percent: 0 },
-    { uid: '2', name: 'test2', size: 1200, status: 'uploading', percent: 0 },
+    { uid: '2', name: 'test2', size: 1200, status: 'uploading', percent: 60 },
     { uid: '3', name: 'test3', size: 1200, status: 'success', percent: 0 },
     { uid: '4', name: 'test4', size: 1200, status: 'error', percent: 0 },
   ])

@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { PreviewFileListProps } from ".";
 import Icon from "../Icon";
+import ProgressBar from "../ProgressBar";
 
 const PreViewFileList: FC<PreviewFileListProps> = (props) => {
 
@@ -23,6 +24,7 @@ const PreViewFileList: FC<PreviewFileListProps> = (props) => {
             <span className="file-actions">
               <Icon icon="times" onClick={() => onRemove(item)} />
             </span>
+            { item.status === 'uploading' &&  <ProgressBar percent={item.percent} /> }
           </li>
         )
       })}
