@@ -157,6 +157,10 @@ function App() {
       <Upload
         action='https://www.fastmock.site/mock/4c1d18ac30a711f83aef9f9eebb952e2/antd/api/file/upload'
         fileList={fileList}
+        name='file'
+        headers={{ Auth: 'Phoenix' }}
+        data={{ key: 'value' }}
+        multiple={true}
       />
     </div>
   );

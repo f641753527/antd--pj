@@ -10,6 +10,11 @@ export interface UploadProps {
   beforeUpload?: (file: File) => boolean | Promise<any> | void
   fileList?: UploadFile[]
   onRemove?: (file: UploadFile) => void
+  name?: string
+  headers?: { [key: string]: any }
+  data?: { [key: string]: any }
+  multiple?: boolean
+  accept?: string
 }
 
 export type UploadStatus = 'ready' | 'uploading' | 'success' | 'error'

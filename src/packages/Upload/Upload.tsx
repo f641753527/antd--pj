@@ -7,7 +7,10 @@ import PreViewFileList from './PreViewFileList'
 
 const Upload: FC<UploadProps> = (props) => {
 
-  const { fileList, onRemove, action, onChange, onSuccess, onError, onProgress, beforeUpload } = props
+  const {
+    fileList, onRemove, action, onChange, onSuccess, onError, onProgress, beforeUpload,
+    name, headers = {}, data = {}, multiple, accept
+  } = props
 
   const uploadRef = useRef<HTMLInputElement>(null)
 
@@ -50,10 +53,14 @@ const Upload: FC<UploadProps> = (props) => {
     }
     changeUploadList([_file, ...uploadList])
     const formData = new FormData()
-    formData.append(file.name, file)
+    formData.append(name ?? 'fileName', file)
+    for (const [key, value] of Object.entries(data)) {
+      formData.append(key, value)
+    }
     axios.post(action, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
+        ...headers
       },
       onUploadProgress: (e: ProgressEvent) => {
         const percent = Math.round(e.loaded * 100 / e.total) || 0
@@ -97,11 +104,19 @@ const Upload: FC<UploadProps> = (props) => {
   return (
     <div>
       <Button onClick={handleClick}>Upload</Button>
-      <input ref={uploadRef} style={{ display: 'none' }} type="file" onChange={handleFileChange} />
+      <input ref={uploadRef} style={{ display: 'none' }} type="file" onChange={handleFileChange}
+        multiple={multiple} accept={accept}
+      />
       <PreViewFileList fileList={uploadList} onRemove={ handleRemove } />
     </div>
   )
 
+}
+
+Upload.defaultProps = {
+  name: 'fileName',
+  multiple: false,
+  accept: '.pdf'
 }
 
 export default Upload
