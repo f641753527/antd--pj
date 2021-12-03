@@ -15,6 +15,7 @@ export interface UploadProps {
   data?: { [key: string]: any }
   multiple?: boolean
   accept?: string
+  draggable?: boolean
 }
 
 export type UploadStatus = 'ready' | 'uploading' | 'success' | 'error'
@@ -32,4 +33,8 @@ export interface UploadFile {
 export interface PreviewFileListProps {
   fileList: UploadFile[]
   onRemove: (file: UploadFile) => void
+}
+
+export interface DraggableProps {
+  putFile: (fileList: FileList) => void
 }

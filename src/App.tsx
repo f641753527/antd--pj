@@ -161,7 +161,10 @@ function App() {
         headers={{ Auth: 'Phoenix' }}
         data={{ key: 'value' }}
         multiple={true}
-      />
+        draggable={false}
+      >
+        <Button>upload</Button>
+      </Upload>
     </div>
   );
 }

@@ -13,10 +13,11 @@ interface classNamesProps {
   theme?: IconTheme
   prefix?: boolean
   suffix?: boolean
+  dragover?: boolean
 }
 
 const useClassNames = (config: classNamesProps) => {
-  const { compDesc, nativeClasses, size, type, disabled, mode, active, opened, theme, prefix, suffix } = config
+  const { compDesc, nativeClasses, size, type, disabled, mode, active, opened, theme, prefix, suffix, dragover } = config
   let classNames = [compDesc]
   if (nativeClasses) {
     classNames = classNames.concat(nativeClasses.split(' '))
@@ -38,6 +39,9 @@ const useClassNames = (config: classNamesProps) => {
   }
   if (prefix || suffix) {
     classNames.push(`${compDesc}-group`)
+  }
+  if (dragover) {
+    classNames.push(`is-dragover`)
   }
 
   size && classNames.push(`${compDesc}-${size}`)

@@ -4,12 +4,13 @@ import Button from '../Button'
 import { UploadProps } from './types'
 import { UploadFile } from '.'
 import PreViewFileList from './PreViewFileList'
+import Drag from './Drag'
 
 const Upload: FC<UploadProps> = (props) => {
 
   const {
     fileList, onRemove, action, onChange, onSuccess, onError, onProgress, beforeUpload,
-    name, headers = {}, data = {}, multiple, accept
+    name, headers = {}, data = {}, multiple, accept, draggable, children,
   } = props
 
   const uploadRef = useRef<HTMLInputElement>(null)
@@ -22,6 +23,10 @@ const Upload: FC<UploadProps> = (props) => {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const fileList: FileList = e.target.files as FileList
+    processFileList(fileList)
+  }
+
+  const processFileList = (fileList: FileList) => {
     onChange && onChange(fileList)
     const list: File[] = Array.from(fileList)
     list.forEach(file => {
@@ -102,8 +107,10 @@ const Upload: FC<UploadProps> = (props) => {
   }
 
   return (
-    <div>
-      <Button onClick={handleClick}>Upload</Button>
+    <div onClick={handleClick}>
+      {
+        draggable ? <Drag putFile={processFileList} >{ children }</Drag> : children
+      }
       <input ref={uploadRef} style={{ display: 'none' }} type="file" onChange={handleFileChange}
         multiple={multiple} accept={accept}
       />
@@ -116,7 +123,8 @@ const Upload: FC<UploadProps> = (props) => {
 Upload.defaultProps = {
   name: 'fileName',
   multiple: false,
-  accept: '.pdf'
+  accept: '.pdf',
+  draggable: false,
 }
 
 export default Upload
