@@ -1,7 +1,8 @@
-import { FC, useState, createContext } from "react";
+import React, { FC, useState, createContext } from "react";
 import useClassNames from "../../hooks/useClassNames";
-// import MenuItem from "./MenuItem";
-import { MenuProps, IMenuContext, MenuItemProps } from "./types";
+import MenuItem from "./MenuItem";
+import SubMenu from "./SubMenu";
+import { MenuProps, IMenuContext, MenuItemProps, SubMenuProps } from "./types";
 import useRenderChildren from './useRenderChildren'
 
 export * from './types';
@@ -43,4 +44,14 @@ Menu.defaultProps = {
   mode: 'horizontal'
 }
 
-export default Menu
+type TransMenuType = FC<MenuProps> & {
+  MenuItem: FC<MenuItemProps>
+  SubMenu: FC<SubMenuProps>
+}
+
+const TransMenu = Menu as TransMenuType
+
+TransMenu.MenuItem = MenuItem
+TransMenu.SubMenu = SubMenu
+
+export default TransMenu

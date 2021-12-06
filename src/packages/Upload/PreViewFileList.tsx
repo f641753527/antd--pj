@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { PreviewFileListProps } from ".";
 import Icon from "../Icon";
 import ProgressBar from "../ProgressBar";

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { ButtonProps, ButtonSize, ButtonType } from "./types";
 import useClassNames from "../../hooks/useClassNames";
 

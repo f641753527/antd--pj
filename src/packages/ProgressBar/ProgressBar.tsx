@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import useClassNames from "../../hooks/useClassNames";
 import { ProgressBarProps } from "./types";
 

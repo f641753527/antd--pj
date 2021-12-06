@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, createContext } from 'react'
+import React, { FunctionComponent, useState, createContext } from 'react'
 import useClassNames from '../../hooks/useClassNames'
 import { ITabs, IActiveContext } from './types'
 import useRenderChildren from './hooks/useRenderChildren'

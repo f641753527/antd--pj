@@ -1,4 +1,4 @@
-import { createContext, FC, useEffect, useRef, useState } from "react"
+import React, { createContext, FC, useEffect, useRef, useState } from "react"
 import { ISelectProps, SelectContextType } from "./index"
 import useClassNames from "../../hooks/useClassNames"
 import Icon from '../Icon'

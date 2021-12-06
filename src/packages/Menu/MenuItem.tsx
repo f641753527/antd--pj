@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import React, { FC, useContext } from "react";
 import { MenuItemProps, MenuContext } from ".";
 import useClassNames from "../../hooks/useClassNames";
 

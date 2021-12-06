@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, KeyboardEvent, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, FC, KeyboardEvent, useEffect, useRef, useState } from "react";
 import Input from ".";
 import useClassNames from "../../hooks/useClassNames";
 import useClickOutside from "../../hooks/useClickOutside";

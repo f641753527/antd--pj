@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useRef, useState } from 'react'
+import React, { ChangeEvent, FC, useRef, useState } from 'react'
 import axios from 'axios'
 import Button from '../Button'
 import { UploadProps } from './types'

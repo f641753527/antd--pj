@@ -1,4 +1,4 @@
-import { FC, useState, DragEvent } from "react";
+import React, { FC, useState, DragEvent } from "react";
 import { DraggableProps } from ".";
 import useClassNames from "../../hooks/useClassNames";
 

@@ -1,4 +1,4 @@
-import { FC, useContext } from "react"
+import React, { FC, useContext } from "react"
 import { ISelectOptionProps } from "./index"
 import useClassNames from "../../hooks/useClassNames"
 import { SelectContext } from './Select'

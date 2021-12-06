@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import Icon from "../Icon";
 import { CSSTransition } from 'react-transition-group'
 import { AlertProps, AlertType } from './types'

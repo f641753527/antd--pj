@@ -1,4 +1,4 @@
-import { FC, useState, MouseEvent, useContext } from "react";
+import React, { FC, useState, MouseEvent, useContext } from "react";
 import { CSSTransition } from 'react-transition-group';
 import { SubMenuProps } from ".";
 import useClassNames from "../../hooks/useClassNames";

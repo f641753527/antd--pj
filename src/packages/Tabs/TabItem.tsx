@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext } from 'react'
+import React, { FunctionComponent, useContext } from 'react'
 import useClassNames from '../../hooks/useClassNames'
 import { ITabItem } from './types'
 import { ActiveContext } from './Tabs'
